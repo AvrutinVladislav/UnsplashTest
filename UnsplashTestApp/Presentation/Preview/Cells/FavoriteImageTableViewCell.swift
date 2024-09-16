@@ -13,7 +13,7 @@ final class FavoriteImageTableViewCell: UITableViewCell {
     static let identifire = "Favorite cell"
     
     private let thumbnailImageView = UIImageView()
-    private let authorLabel = UILabel()
+    private let authorTextView = UITextView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,9 +23,10 @@ final class FavoriteImageTableViewCell: UITableViewCell {
         thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(thumbnailImageView)
         
-        authorLabel.font = .systemFont(ofSize: 16)
-        authorLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(authorLabel)
+        authorTextView.font = .systemFont(ofSize: 16)
+        authorTextView.textColor = .black
+        authorTextView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(authorTextView)
 
         setupConstraints()
     }
@@ -41,14 +42,15 @@ final class FavoriteImageTableViewCell: UITableViewCell {
             thumbnailImageView.widthAnchor.constraint(equalToConstant: 180),
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 120),
 
-            authorLabel.leadingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor, constant: 16),
-            authorLabel.centerYAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerYAnchor),
-            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            authorTextView.leadingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor, constant: 16),
+            authorTextView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 16),
+            authorTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            authorTextView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
     
     func fillCell(with photo: PhotoCell) {
-        authorLabel.text = photo.photo.user.name
+        authorTextView.text = photo.photo.user.name
         if let url = URL(string: photo.photo.urls.small) {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if let data = data {

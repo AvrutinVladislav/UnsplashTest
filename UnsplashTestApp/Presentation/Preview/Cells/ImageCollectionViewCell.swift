@@ -26,8 +26,8 @@ final class ImageCollectionViewCell: UICollectionViewCell {
            fatalError("init(coder:) has not been implemented")
        }
        
-       func configure(with photo: Photo) {
-           if let url = URL(string: photo.urls.small) {
+       func configure(with item: PhotoCell) {
+           if let url = URL(string: item.photo.urls.small) {
                URLSession.shared.dataTask(with: url) { data, response, error in
                    if let data = data {
                        DispatchQueue.main.async {

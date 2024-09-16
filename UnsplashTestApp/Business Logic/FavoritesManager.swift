@@ -14,11 +14,32 @@ final class FavoritesManager {
     private(set) var favorites: [PhotoCell] = []
     
     func add(_ item: PhotoCell) {
-        favorites.append(item)
+        if favorites.contains(where: {$0.photo.id != item.photo.id}) || favorites.isEmpty {
+            favorites.append(item)
+        }        
+        saveToUserDefaults(favorites)
     }
     
     func remove(_ item: PhotoCell) {
         favorites.removeAll { $0.photo.id == item.photo.id }
+        saveToUserDefaults(favorites)
+    }
+    
+    func saveToUserDefaults(_ objects: [PhotoCell]) {
+          let encoder = JSONEncoder()
+          if let encoded = try? encoder.encode(objects){
+             UserDefaults.standard.set(encoded, forKey: "FavoriteImages")
+          }
+     }
+    
+    func loadFromUserDefaults() {
+        guard let data = UserDefaults.standard.data(forKey: "FavoriteImages") else { return }
+        do {
+            favorites = try JSONDecoder().decode([PhotoCell].self, from: data)
+        }
+        catch {
+            print("Error load data from UserDefault")
+        }
     }
     
 }

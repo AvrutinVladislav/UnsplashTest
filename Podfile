@@ -6,7 +6,7 @@ target 'UnsplashTestApp' do
   use_frameworks!
 
   # Pods for UnsplashTestApp
-
+  pod 'SDWebImage'
 end
 
 

@@ -34,6 +34,15 @@ final class PhotoDetailsViewController: UIViewController {
         configure(with: photo)
         navigationController?.navigationBar.tintColor = .black
     }
+}
+
+private extension PhotoDetailsViewController {
+    func configureDate(for date: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        guard let formattedDate = formatter.date(from: date) else { return ""}
+        return formatter.string(from: formattedDate)
+    }
     
     func setupUI() {
         view.backgroundColor = .white
@@ -116,23 +125,28 @@ final class PhotoDetailsViewController: UIViewController {
         downloadsLabel.text = "Downloads: \(item.photo.downloads ?? 0)"
     }
     
+    @objc func configureAlert() {
+        let vcAlert = UIAlertController(title: "Are you sure you want to remove the picture from Favorite list?", message: nil, preferredStyle: .alert)
+        vcAlert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { [weak self] _ in
+            self?.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            if let photo = self?.photo {
+                FavoritesManager.shared.remove(photo)
+            }
+        }))
+        vcAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {[weak self] _ in
+            self?.photo.isFavorite.toggle()
+        }))
+        self.present(vcAlert, animated: true, completion: nil)
+    }
+    
     @objc func toggleFavorite() {
         photo.isFavorite.toggle()
         if photo.isFavorite {
             favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             FavoritesManager.shared.add(photo)
         } else {
-            favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            FavoritesManager.shared.remove(photo)
+            configureAlert()
         }
     }
-}
-
-private extension PhotoDetailsViewController {
-    func configureDate(for date: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        guard let formattedDate = formatter.date(from: date) else { return ""}
-        return formatter.string(from: formattedDate)
-    }
+    
 }

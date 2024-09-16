@@ -9,7 +9,6 @@
 //import UIKit
 
 import UIKit
-import Alamofire
 
 class RandomPhotosViewController: UIViewController {
     
@@ -22,7 +21,7 @@ class RandomPhotosViewController: UIViewController {
     }()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     private let notFoundLabel = UILabel()
-    private var photos: [Photo] = []
+    private var photos: [PhotoCell] = []
     private var timer: Timer?
     
     override func viewDidLoad() {
@@ -30,6 +29,7 @@ class RandomPhotosViewController: UIViewController {
         loadPhotos()
         setupSearchBar()
         setupCollectionView()
+        FavoritesManager.shared.loadFromUserDefaults()
     }
     
 }
@@ -72,7 +72,7 @@ private extension RandomPhotosViewController {
         Task {
             do {
                 let fetchedPhotos = try await NetworkService.shared.fetchRandomPhotos(query: query)
-                self.photos = fetchedPhotos                
+                self.photos = prepareData(fetchedPhotos)
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -81,6 +81,21 @@ private extension RandomPhotosViewController {
             }
         }
     }
+    
+    func prepareData(_ fetchData: [Photo]) -> [PhotoCell] {
+        var result: [PhotoCell] = []
+        fetchData.forEach { item in
+            result.append(PhotoCell(photo: item))
+        }
+        let favoriteImages = FavoritesManager.shared.favorites
+        result.forEach { item in
+            if let index = favoriteImages.firstIndex(where: {$0.photo.id == item.photo.id}) {
+                result[index].isFavorite.toggle()
+            }
+        }
+        return result
+    }
+    
 }
 
 //MARK: - UISearchBarDelegate
@@ -112,7 +127,7 @@ extension RandomPhotosViewController: UICollectionViewDataSource {
 extension RandomPhotosViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let photo = photos[indexPath.item]
-        let detailsVC = PhotoDetailsViewController(photo: PhotoCell(photo: photo))
+        let detailsVC = PhotoDetailsViewController(photo: photo)
         navigationController?.pushViewController(detailsVC, animated: true)
     }
 }
