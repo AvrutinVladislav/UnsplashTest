@@ -87,10 +87,10 @@
 		5769BD302C94552500EE03CC /* UnsplashTestApp */ = {
 			isa = PBXGroup;
 			children = (
-				5769BD572C96E65A00EE03CC /* Models */,
 				5769BD502C945FCB00EE03CC /* App */,
 				5769BD4F2C945FB700EE03CC /* Presentation */,
 				5769BD4E2C945FAB00EE03CC /* Business Logic */,
+				5769BD572C96E65A00EE03CC /* Models */,
 				5769BD512C945FD400EE03CC /* Resources */,
 			);
 			path = UnsplashTestApp;

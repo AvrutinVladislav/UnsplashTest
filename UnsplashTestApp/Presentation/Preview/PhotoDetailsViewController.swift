@@ -111,13 +111,15 @@ private extension PhotoDetailsViewController {
     
     func configure(with item: PhotoCell) {
         if let url = URL(string: item.photo.urls.full) {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data {
-                    DispatchQueue.main.async {
-                        self.imageView.image = UIImage(data: data)
-                    }
-                }
-            }.resume()
+            //Оставляю специально закоменченым нативный вариант загрузки картинки
+//            URLSession.shared.dataTask(with: url) { data, response, error in
+//                if let data = data {
+//                    DispatchQueue.main.async {
+//                        self.imageView.image = UIImage(data: data)
+//                    }
+//                }
+//            }.resume()
+            self.imageView.sd_setImage(with: url)
         }
         authorLabel.text = "Author: \(item.photo.user.name)"
         dateLabel.text = "Date: \(configureDate(for: item.photo.created_at))"

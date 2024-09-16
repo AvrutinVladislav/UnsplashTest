@@ -10,7 +10,7 @@
 
 import UIKit
 
-class RandomPhotosViewController: UIViewController {
+final class RandomPhotosViewController: UIViewController {
     
     private let searchBar = UISearchBar()
     private let layout: UICollectionViewFlowLayout = {
@@ -29,7 +29,6 @@ class RandomPhotosViewController: UIViewController {
         loadPhotos()
         setupSearchBar()
         setupCollectionView()
-        FavoritesManager.shared.loadFromUserDefaults()
     }
     
 }
@@ -69,6 +68,7 @@ private extension RandomPhotosViewController {
     }
 
     func loadPhotos(query: String = "") {
+        FavoritesManager.shared.loadFromUserDefaults()
         Task {
             do {
                 let fetchedPhotos = try await NetworkService.shared.fetchRandomPhotos(query: query)

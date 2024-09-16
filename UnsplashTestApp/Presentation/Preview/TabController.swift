@@ -7,14 +7,11 @@
 
 import UIKit
 
-class TabController: UITabBarController {
+final class TabController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
-        tabBar.tintColor = .green
-        tabBar.unselectedItemTintColor = .black
-        tabBar.backgroundColor = .gray
     }
 
 }
@@ -24,6 +21,9 @@ extension TabController {
         let collectionOfImages = self.setupNavigationController(title: "Collection", image: UIImage(systemName: "checklist.unchecked"), vc: RandomPhotosViewController())
         let favoriteImages = self.setupNavigationController(title: "Favorite", image: UIImage(systemName: "heart"), vc: FavoritesViewController())
         self.setViewControllers([collectionOfImages, favoriteImages], animated: true)
+        tabBar.tintColor = .green
+        tabBar.unselectedItemTintColor = .black
+        tabBar.backgroundColor = .gray
     }
     
     func setupNavigationController(title: String, image: UIImage?, vc: UIViewController) -> UINavigationController {

@@ -52,13 +52,15 @@ final class FavoriteImageTableViewCell: UITableViewCell {
     func fillCell(with photo: PhotoCell) {
         authorTextView.text = photo.photo.user.name
         if let url = URL(string: photo.photo.urls.small) {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data {
-                    DispatchQueue.main.async {
-                        self.thumbnailImageView.image = UIImage(data: data)
-                    }
-                }
-            }.resume()
+            //Оставляю специально закоменченым нативный вариант загрузки картинки
+//            URLSession.shared.dataTask(with: url) { data, response, error in
+//                if let data = data {
+//                    DispatchQueue.main.async {
+//                        self.thumbnailImageView.image = UIImage(data: data)
+//                    }
+//                }
+//            }.resume()
+            self.thumbnailImageView.sd_setImage(with: url)
         }
     }
 }

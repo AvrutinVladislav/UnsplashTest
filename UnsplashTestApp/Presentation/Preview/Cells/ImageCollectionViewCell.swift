@@ -5,7 +5,7 @@
 //  Created by Vladislav Avrutin on 13.09.2024.
 //
 
-import Foundation
+import SDWebImage
 import UIKit
 
 final class ImageCollectionViewCell: UICollectionViewCell {
@@ -28,13 +28,15 @@ final class ImageCollectionViewCell: UICollectionViewCell {
        
        func configure(with item: PhotoCell) {
            if let url = URL(string: item.photo.urls.small) {
-               URLSession.shared.dataTask(with: url) { data, response, error in
-                   if let data = data {
-                       DispatchQueue.main.async {
-                           self.imageView.image = UIImage(data: data)
-                       }
-                   }
-               }.resume()
+               //Оставляю специально закоменченым нативный вариант загрузки картинки
+//               URLSession.shared.dataTask(with: url) { data, response, error in
+//                   if let data = data {
+//                       DispatchQueue.main.async {
+//                           self.imageView.image = UIImage(data: data)
+//                       }
+//                   }
+//               }.resume()
+               self.imageView.sd_setImage(with: url, placeholderImage: nil)
            }
        }
 }
