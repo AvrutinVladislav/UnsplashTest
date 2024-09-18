@@ -10,7 +10,7 @@
 
 import UIKit
 
-final class RandomPhotosViewController: UIViewController {
+final class RandomPhotosViewController: BaseViewController {
     
     private let searchBar = UISearchBar()
     private let layout: UICollectionViewFlowLayout = {
@@ -23,10 +23,11 @@ final class RandomPhotosViewController: UIViewController {
     private let notFoundLabel = UILabel()
     private var photos: [PhotoCell] = []
     private var timer: Timer?
+    private var paginationPage = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadPhotos()
+        loadPhotos(page: paginationPage)
         setupSearchBar()
         setupCollectionView()
     }
@@ -67,12 +68,12 @@ private extension RandomPhotosViewController {
         ])
     }
 
-    func loadPhotos(query: String = "") {
+    func loadPhotos(query: String = "", page: Int) {
         FavoritesManager.shared.loadFromUserDefaults()
         Task {
             do {
-                let fetchedPhotos = try await NetworkService.shared.fetchRandomPhotos(query: query)
-                self.photos = prepareData(fetchedPhotos)
+                let fetchedPhotos = try await NetworkService.shared.fetchRandomPhotos(query: query, page: page, perPage: 30)
+                self.photos.append(contentsOf: prepareData(fetchedPhotos))   
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -103,8 +104,14 @@ extension RandomPhotosViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] timer in
-            self?.loadPhotos(query: searchText)
+            guard let self else { return }
+            self.loadPhotos(query: searchText, page: self.paginationPage)
         }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.endEditing(true)
     }
 
 }
@@ -144,5 +151,19 @@ extension RandomPhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10 
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension RandomPhotosViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height - 200 {
+            paginationPage += 1
+            loadPhotos(page: paginationPage)
+        }
     }
 }

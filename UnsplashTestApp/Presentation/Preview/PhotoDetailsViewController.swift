@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class PhotoDetailsViewController: UIViewController {
+final class PhotoDetailsViewController: BaseViewController {
 
     private let imageView = UIImageView()
     private let authorLabel = UILabel()
@@ -32,7 +32,8 @@ final class PhotoDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configure(with: photo)
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = Resources.Colors.textColor
+        navigationController?.navigationBar.backgroundColor = Resources.Colors.viewBackground
     }
 }
 
@@ -45,26 +46,24 @@ private extension PhotoDetailsViewController {
     }
     
     func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = Resources.Colors.viewBackground
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         authorLabel.font = .boldSystemFont(ofSize: 18)
+        authorLabel.textColor = Resources.Colors.textColor
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        dateLabel.font = .systemFont(ofSize: 16)
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        locationLabel.font = .systemFont(ofSize: 16)
-        locationLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        downloadsLabel.font = .systemFont(ofSize: 16)
-        downloadsLabel.translatesAutoresizingMaskIntoConstraints = false
+        for item in [dateLabel, locationLabel, downloadsLabel] {
+            item.textColor = Resources.Colors.textColor
+            item.font = .systemFont(ofSize: 16)
+            item.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         favoriteButton.setImage(photo.isFavorite ? UIImage(systemName: "heart.fill")
-                                                 : UIImage(systemName: "heart"), for: .normal)
+                                                 : UIImage(systemName: "suit.heart"), for: .normal)
         favoriteButton.tintColor = .red
         favoriteButton.addTarget(self, action: #selector(toggleFavorite), for: .touchUpInside)
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
@@ -105,12 +104,20 @@ private extension PhotoDetailsViewController {
             favoriteButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             favoriteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             favoriteButton.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -8),
-            favoriteButton.heightAnchor.constraint(equalToConstant: 44)
+            favoriteButton.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
     
     func configure(with item: PhotoCell) {
-        if let url = URL(string: item.photo.urls.full) {
+        loadImage(url: item.photo.urls.full)
+        authorLabel.text = "Author: \(item.photo.user.name)"
+        dateLabel.text = "Date: \(configureDate(for: item.photo.created_at))"
+        locationLabel.text = "Location: \(item.photo.location?.name ?? "Unknown")"
+        downloadsLabel.text = "Downloads: \(item.photo.downloads ?? 0)"
+    }
+    
+    func loadImage(url: String) {
+        if let url = URL(string: url) {
             //Оставляю специально закоменченым нативный вариант загрузки картинки
 //            URLSession.shared.dataTask(with: url) { data, response, error in
 //                if let data = data {
@@ -119,12 +126,15 @@ private extension PhotoDetailsViewController {
 //                    }
 //                }
 //            }.resume()
-            self.imageView.sd_setImage(with: url)
+            let spiner = createLoadSpiner(at: imageView)
+            spiner.startAnimating()
+            self.imageView.sd_setImage(with: url) { _, _, _, _ in
+                if let image = self.imageView.image {
+                    spiner.stopAnimating()
+                    self.imageView.image = image
+                }
+            }
         }
-        authorLabel.text = "Author: \(item.photo.user.name)"
-        dateLabel.text = "Date: \(configureDate(for: item.photo.created_at))"
-        locationLabel.text = "Location: \(item.photo.location?.name ?? "Unknown")"
-        downloadsLabel.text = "Downloads: \(item.photo.downloads ?? 0)"
     }
     
     @objc func configureAlert() {

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class FavoritesViewController: UIViewController {
+final class FavoritesViewController: BaseViewController {
     
     private let favoriteTableView = UITableView()
     private let emptyFavoriteListLabel = UILabel()

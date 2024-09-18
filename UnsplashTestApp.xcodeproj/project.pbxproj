@@ -21,6 +21,9 @@
 		5769BD5D2C96ED8B00EE03CC /* PhotoDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BD5C2C96ED8B00EE03CC /* PhotoDetailsViewController.swift */; };
 		5769BD5F2C96EE2500EE03CC /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BD5E2C96EE2500EE03CC /* FavoritesManager.swift */; };
 		5769BD612C96F09300EE03CC /* FavoriteImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BD602C96F09300EE03CC /* FavoriteImageTableViewCell.swift */; };
+		57DFCFB92C9AE963008416C5 /* Resouces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DFCFB82C9AE956008416C5 /* Resouces.swift */; };
+		57DFCFBE2C9AEA07008416C5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DFCFBD2C9AE9FE008416C5 /* UIColor.swift */; };
+		57DFCFC32C9AF488008416C5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DFCFC22C9AF480008416C5 /* BaseViewController.swift */; };
 		67F3C17036E474BA3F6EFA49 /* Pods_UnsplashTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75E11968B6C2A20FACB0C0C /* Pods_UnsplashTestApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +44,9 @@
 		5769BD5C2C96ED8B00EE03CC /* PhotoDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsViewController.swift; sourceTree = "<group>"; };
 		5769BD5E2C96EE2500EE03CC /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		5769BD602C96F09300EE03CC /* FavoriteImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImageTableViewCell.swift; sourceTree = "<group>"; };
+		57DFCFB82C9AE956008416C5 /* Resouces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resouces.swift; sourceTree = "<group>"; };
+		57DFCFBD2C9AE9FE008416C5 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		57DFCFC22C9AF480008416C5 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6CB8F5DF04E4A8C102A754C9 /* Pods-UnsplashTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnsplashTestApp.release.xcconfig"; path = "Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		F75E11968B6C2A20FACB0C0C /* Pods_UnsplashTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnsplashTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F89B7F103D633395F2F4C4F2 /* Pods-UnsplashTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnsplashTestApp.debug.xcconfig"; path = "Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,6 +98,7 @@
 				5769BD4E2C945FAB00EE03CC /* Business Logic */,
 				5769BD572C96E65A00EE03CC /* Models */,
 				5769BD512C945FD400EE03CC /* Resources */,
+				57DFCFBC2C9AE9EB008416C5 /* Utils */,
 			);
 			path = UnsplashTestApp;
 			sourceTree = "<group>";
@@ -139,6 +146,8 @@
 		5769BD512C945FD400EE03CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				57DFCFC12C9AF479008416C5 /* Base */,
+				57DFCFB82C9AE956008416C5 /* Resouces.swift */,
 				5769BD3A2C94552600EE03CC /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -162,6 +171,30 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		57DFCFBB2C9AE9E0008416C5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				57DFCFBD2C9AE9FE008416C5 /* UIColor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		57DFCFBC2C9AE9EB008416C5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				57DFCFBB2C9AE9E0008416C5 /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		57DFCFC12C9AF479008416C5 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				57DFCFC22C9AF480008416C5 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		C4468DF9C0BE00072A41BA8F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +215,7 @@
 				5769BD2A2C94552500EE03CC /* Sources */,
 				5769BD2B2C94552500EE03CC /* Frameworks */,
 				5769BD2C2C94552500EE03CC /* Resources */,
-				C5AC64D0FF6591B9BF661FC2 /* [CP] Embed Pods Frameworks */,
+				5FFA3817D2D1F505D86F602A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -239,6 +272,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5FFA3817D2D1F505D86F602A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AFBA2BF720522256079B7856 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,23 +311,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C5AC64D0FF6591B9BF661FC2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UnsplashTestApp/Pods-UnsplashTestApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -286,15 +319,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				5769BD362C94552500EE03CC /* TabController.swift in Sources */,
+				57DFCFBE2C9AEA07008416C5 /* UIColor.swift in Sources */,
 				5769BD612C96F09300EE03CC /* FavoriteImageTableViewCell.swift in Sources */,
 				5769BD322C94552500EE03CC /* AppDelegate.swift in Sources */,
 				5769BD5B2C96E6B100EE03CC /* SearchResult.swift in Sources */,
+				57DFCFC32C9AF488008416C5 /* BaseViewController.swift in Sources */,
 				5769BD562C96D05B00EE03CC /* NetworkService.swift in Sources */,
 				5769BD5D2C96ED8B00EE03CC /* PhotoDetailsViewController.swift in Sources */,
 				5769BD592C96E66800EE03CC /* Photo.swift in Sources */,
 				5769BD342C94552500EE03CC /* SceneDelegate.swift in Sources */,
 				5769BD5F2C96EE2500EE03CC /* FavoritesManager.swift in Sources */,
 				5769BD542C946D1100EE03CC /* ImageCollectionViewCell.swift in Sources */,
+				57DFCFB92C9AE963008416C5 /* Resouces.swift in Sources */,
 				5769BD4A2C945E8800EE03CC /* FavoriteImagesViewController.swift in Sources */,
 				5769BD482C945E6F00EE03CC /* RandomPhotosViewController.swift in Sources */,
 			);
