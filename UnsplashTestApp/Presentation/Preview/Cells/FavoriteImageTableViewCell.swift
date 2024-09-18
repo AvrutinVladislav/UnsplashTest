@@ -21,11 +21,13 @@ final class FavoriteImageTableViewCell: UITableViewCell {
         thumbnailImageView.contentMode = .scaleAspectFill
         thumbnailImageView.clipsToBounds = true
         thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(thumbnailImageView)
         
         authorTextView.font = .systemFont(ofSize: 16)
         authorTextView.textColor = .black
         authorTextView.translatesAutoresizingMaskIntoConstraints = false
+        authorTextView.isUserInteractionEnabled = false
+        
+        contentView.addSubview(thumbnailImageView)
         contentView.addSubview(authorTextView)
 
         setupConstraints()
@@ -60,7 +62,18 @@ final class FavoriteImageTableViewCell: UITableViewCell {
 //                    }
 //                }
 //            }.resume()
-            self.thumbnailImageView.sd_setImage(with: url)
+            let spiner = UIActivityIndicatorView(style: .large)
+            spiner.translatesAutoresizingMaskIntoConstraints = false
+            thumbnailImageView.addSubview(spiner)
+            spiner.centerXAnchor.constraint(equalTo: thumbnailImageView.centerXAnchor).isActive = true
+            spiner.centerYAnchor.constraint(equalTo: thumbnailImageView.centerYAnchor).isActive = true
+            spiner.hidesWhenStopped = true
+            self.thumbnailImageView.sd_setImage(with: url) {_,_,_,_ in
+                if let image = self.thumbnailImageView.image {
+                    spiner.stopAnimating()
+                    self.thumbnailImageView.image = image
+                }
+            }
         }
     }
 }

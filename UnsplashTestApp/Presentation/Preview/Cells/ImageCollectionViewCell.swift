@@ -16,10 +16,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
        
        override init(frame: CGRect) {
            super.init(frame: frame)
-           contentView.addSubview(imageView)
-           imageView.frame = contentView.bounds
-           imageView.contentMode = .scaleAspectFill
-           imageView.clipsToBounds = true
+           setupUI()
        }
        
        required init?(coder: NSCoder) {
@@ -36,7 +33,28 @@ final class ImageCollectionViewCell: UICollectionViewCell {
 //                       }
 //                   }
 //               }.resume()
+               let spiner = UIActivityIndicatorView(style: .large)
+               spiner.translatesAutoresizingMaskIntoConstraints = false
+               imageView.addSubview(spiner)
+               spiner.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+               spiner.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
+               spiner.hidesWhenStopped = true
+               self.imageView.sd_setImage(with: url) {_,_,_,_ in
+                   if let image = self.imageView.image {
+                       spiner.stopAnimating()
+                       self.imageView.image = image
+                   }
+               }
                self.imageView.sd_setImage(with: url, placeholderImage: nil)
            }
        }
+}
+
+private extension ImageCollectionViewCell {
+    func setupUI() {
+        contentView.addSubview(imageView)
+        imageView.frame = contentView.bounds
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+    }
 }

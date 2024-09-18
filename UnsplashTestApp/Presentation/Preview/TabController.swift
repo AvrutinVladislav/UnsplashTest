@@ -23,7 +23,7 @@ extension TabController {
         self.setViewControllers([collectionOfImages, favoriteImages], animated: true)
         tabBar.tintColor = .green
         tabBar.unselectedItemTintColor = .black
-        tabBar.backgroundColor = .gray
+        tabBar.backgroundColor = Resources.Colors.tabBarBackgroundColor
     }
     
     func setupNavigationController(title: String, image: UIImage?, vc: UIViewController) -> UINavigationController {
