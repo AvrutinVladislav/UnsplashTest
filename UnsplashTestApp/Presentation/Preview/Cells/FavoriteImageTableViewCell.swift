@@ -54,20 +54,8 @@ final class FavoriteImageTableViewCell: UITableViewCell {
     func fillCell(with photo: PhotoCell) {
         authorTextView.text = photo.photo.user.name
         if let url = URL(string: photo.photo.urls.small) {
-            //Оставляю специально закоменченым нативный вариант загрузки картинки
-//            URLSession.shared.dataTask(with: url) { data, response, error in
-//                if let data = data {
-//                    DispatchQueue.main.async {
-//                        self.thumbnailImageView.image = UIImage(data: data)
-//                    }
-//                }
-//            }.resume()
-            let spiner = UIActivityIndicatorView(style: .large)
-            spiner.translatesAutoresizingMaskIntoConstraints = false
-            thumbnailImageView.addSubview(spiner)
-            spiner.centerXAnchor.constraint(equalTo: thumbnailImageView.centerXAnchor).isActive = true
-            spiner.centerYAnchor.constraint(equalTo: thumbnailImageView.centerYAnchor).isActive = true
-            spiner.hidesWhenStopped = true
+            let spiner = configureSpinner(for: thumbnailImageView)
+            spiner.startAnimating()
             self.thumbnailImageView.sd_setImage(with: url) {_,_,_,_ in
                 if let image = self.thumbnailImageView.image {
                     spiner.stopAnimating()
@@ -76,5 +64,16 @@ final class FavoriteImageTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    func configureSpinner(for view: UIView) -> UIActivityIndicatorView {
+        let spiner = UIActivityIndicatorView(style: .large)
+        spiner.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spiner)
+        spiner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spiner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spiner.hidesWhenStopped = true
+        return spiner
+    }
+    
 }
 

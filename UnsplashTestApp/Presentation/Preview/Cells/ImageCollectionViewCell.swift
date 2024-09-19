@@ -25,20 +25,8 @@ final class ImageCollectionViewCell: UICollectionViewCell {
        
        func configure(with item: PhotoCell) {
            if let url = URL(string: item.photo.urls.small) {
-               //Оставляю специально закоменченым нативный вариант загрузки картинки
-//               URLSession.shared.dataTask(with: url) { data, response, error in
-//                   if let data = data {
-//                       DispatchQueue.main.async {
-//                           self.imageView.image = UIImage(data: data)
-//                       }
-//                   }
-//               }.resume()
-               let spiner = UIActivityIndicatorView(style: .large)
-               spiner.translatesAutoresizingMaskIntoConstraints = false
-               imageView.addSubview(spiner)
-               spiner.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-               spiner.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
-               spiner.hidesWhenStopped = true
+               let spiner = configureSpinner(for: imageView)
+               spiner.startAnimating()
                self.imageView.sd_setImage(with: url) {_,_,_,_ in
                    if let image = self.imageView.image {
                        spiner.stopAnimating()
@@ -57,4 +45,15 @@ private extension ImageCollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
     }
+    
+    func configureSpinner(for view: UIView) -> UIActivityIndicatorView {
+        let spiner = UIActivityIndicatorView(style: .large)
+        spiner.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spiner)
+        spiner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spiner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spiner.hidesWhenStopped = true
+        return spiner
+    }
+    
 }
